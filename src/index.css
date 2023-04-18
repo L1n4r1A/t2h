@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  input:checked ~ .dot {
+    background: #e06766;
+  }
+  input:checked ~ .toggle-bg {
+    background: #e06766;
+    opacity: 0.15;
+  }
+}
