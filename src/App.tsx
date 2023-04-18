@@ -83,7 +83,15 @@ const App: Component = () => {
       <main class="mb-8 flex flex-1 flex-col">
         <div class="flex flex-1 items-center">
           <div class="m-8 flex h-full flex-1 flex-col justify-stretch">
-            <h2 class="my-2 text-2xl font-bold">Input Text</h2>
+            <div class="flex items-center justify-between">
+              <h2 class="my-2 text-2xl font-bold">Input Text</h2>
+              <button
+                class="mx-2 h-fit rounded-full px-4 py-2 hover:bg-accent hover:bg-opacity-10"
+                onClick={resetInput}
+              >
+                リセット
+              </button>
+            </div>
             <textarea
               class="h-full w-full resize-y rounded bg-panelHeaderBg p-2 outline-none focus:outline focus:outline-2 focus:outline-accent"
               onInput={onChangeInputText}
@@ -166,6 +174,12 @@ const copyToClipboard = () => {
   navigator.clipboard.writeText(outputText());
 
   setInterval(() => (copyButtonElem.textContent = prevText), 3000, copyButtonElem, prevText);
+};
+
+const resetInput = () => {
+  inputTextElem.value = "";
+
+  convertInputText();
 };
 
 export default App;
