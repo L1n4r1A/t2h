@@ -186,8 +186,8 @@ const resetInput = () => {
 };
 
 const shakeRuby = (inputText: string) => {
+  inputText = inputText.replaceAll(/｜(.+?)《(.+?)》/g, "<ruby>$1<rt>$2</rt></ruby>");
   const inputTextRubyArray = [...inputText.matchAll(/《(.+?)》/g)].map((match) => match[1]) ?? [];
-  console.log(inputTextRubyArray);
   const inputTextSplitedByRuby = inputText.split(/《.+?》/g);
 
   inputTextRubyArray.forEach((ruby, index) => {
