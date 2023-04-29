@@ -23,11 +23,13 @@
     "tailwindcss": "^3.3.1",
     "typescript": "^5.0.4",
     "vite": "^4.2.1",
-    "vite-plugin-solid": "^2.7.0"
+    "vite-plugin-solid": "^2.7.0",
+    "vite-plugin-wasm": "^3.2.2"
   },
   "dependencies": {
     "@prettier/plugin-xml": "^2.2.0",
     "js-beautify": "^1.14.7",
+    "lindera-js": "^0.1.4",
     "marked": "^4.3.0",
     "parser-html": "^1.0.6",
     "prettier": "^2.8.7",

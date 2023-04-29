@@ -26,7 +26,7 @@ export const convertTextToHTML = (text: string, parseMD: boolean = true) => {
     max_preserve_newlines: 0,
     wrap_line_length: 1,
     wrap_attributes_indent_size: 0,
-    unformatted: ["strong", "em", "h1", "h2", "h3", "h4", "h5", "h6"],
+    unformatted: ["strong", "em", "h1", "h2", "h3", "h4", "h5", "h6", "ruby", "rt"],
     content_unformatted: [],
   };
 

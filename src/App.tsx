@@ -1,6 +1,7 @@
 import { Component, JSX, createSignal, onMount } from "solid-js";
 import { convertTextToHTML } from "./scripts/convertToHTML";
 import { addEventListener } from "solid-js/web";
+import * as lindera from "lindera-js";
 
 const [outputText, setOutputText] = createSignal("");
 const [parseMD, setParseMD] = createSignal(false);
@@ -12,6 +13,8 @@ let copyButtonElem: HTMLButtonElement;
 
 const App: Component = () => {
   onMount(() => {
+    lindera.tokenize("るなちさんのあほばかまぬけいんきゃめがね");
+
     inputTextElem.value = localStorage.getItem("input") ?? "";
     parseMDtoggleElem.checked = JSON.parse(localStorage.getItem("parseMD") ?? "false");
     setParseMD(parseMDtoggleElem.checked);
@@ -126,7 +129,7 @@ const convertInputText = () => {
 
   localStorage.setItem("input", inputText);
 
-  setOutputText(convertTextToHTML(inputText, parseMD()));
+  setOutputText(convertTextToHTML(shakeRuby(inputText), parseMD()));
 };
 
 const onChangeInputText: JSX.InputEventHandlerUnion<HTMLTextAreaElement, InputEvent> | undefined = (
@@ -136,7 +139,7 @@ const onChangeInputText: JSX.InputEventHandlerUnion<HTMLTextAreaElement, InputEv
 
   localStorage.setItem("input", inputText);
 
-  setOutputText(convertTextToHTML(inputText, parseMD()));
+  setOutputText(convertTextToHTML(shakeRuby(inputText), parseMD()));
 };
 
 const toggleParseMD: JSX.InputEventHandlerUnion<HTMLInputElement, InputEvent> | undefined = (
@@ -180,6 +183,25 @@ const resetInput = () => {
   inputTextElem.value = "";
 
   convertInputText();
+};
+
+const shakeRuby = (inputText: string) => {
+  const inputTextRubyArray = [...inputText.matchAll(/《(.+?)》/g)].map((match) => match[1]) ?? [];
+  console.log(inputTextRubyArray);
+  const inputTextSplitedByRuby = inputText.split(/《.+?》/g);
+
+  inputTextRubyArray.forEach((ruby, index) => {
+    const wakachigakiArray = (
+      lindera.tokenize(inputTextSplitedByRuby[index]) as unknown as lindera.KuromojiJSToken[]
+    ).map((token) => token.surface_form);
+
+    const lastIndex = wakachigakiArray.length - 1;
+    wakachigakiArray[lastIndex] = `<ruby>${wakachigakiArray[lastIndex]}<rt>${ruby}</rt></ruby>`;
+
+    inputTextSplitedByRuby[index] = wakachigakiArray.join("");
+  });
+
+  return inputTextSplitedByRuby.join("");
 };
 
 export default App;
